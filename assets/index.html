@@ -1,0 +1,298 @@
+<!doctype html>
+<html>
+
+<head>
+   <link rel="stylesheet"
+         href="interactive-map.css">
+   <style>
+      .ct-plus {
+         width: 50px;
+      }
+
+      .ct-close {
+         width: 50px;
+      }
+   </style>
+</head>
+
+<body>
+
+   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+         rel="stylesheet">
+   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+         rel="stylesheet">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+   <img src="./GardenBKG1Final (1).png"
+        style="width:3840px;max-width: unset;">
+   <div class="entireContainer"
+        style="display:none"
+        id="template">
+      <div class="shortContainer"
+           style="display:inline-block">
+         <img src="plusIcon.png"
+              class="openButton">
+         <div class="shortName"></div>
+      </div>
+      <div class="popup">
+         <img src="closeIcon.webp"
+              class="closeButton">
+         <div class="popupName"></div>
+         <div class="popupContent"></div>
+         <a class="dButton">More Information</a>
+      </div>
+   </div>
+   <!--
+      <button class="ct-city__button"
+              tabindex="0">
+         <img class="ct-plus"
+              src="plusIcon.png"
+              data-pin-nopin="true">
+         <img class="ct-close"
+              src="closeIcon.webp"
+              data-pin-nopin="true">
+         <span class="ct-city__name"
+               id="plantName">Plant 1</span>
+      </button>
+      <div class="ct-popup">
+         <div class="inner">
+            <span class="ct-popup__name"
+                  id="plantName2">Plant Name</span>
+            <p class="ct-popup__content"
+               id="plantDescription">
+               Plant description...<br />
+            </p>
+            <a class="dButton"
+               href="#">More Information</a>
+         </div>
+      </div>
+   </div>-->
+   <script>
+      var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      var element = document.body
+      if (isMobile) {
+         //element.innerHTML = 'You are using Mobile. <a href="https://sites.google.com/view/shakespearegarden/plants?read_current=1" target="_blank">See all plants</a>';
+      } else {
+         //element.innerHTML = element.innerHTML + "<br>You are using Desktop.";
+      }
+      var plantInformation = [{
+         name: "Sweet Marjoram",
+         scientificName: "Origanum majorana",
+         playLine: "She was the sweet marjoram of the salad. (All Well That Ends Well, IV .v)",
+         URL: "https://sites.google.com/view/shakespearegarden/plants/sweet-marjoram",
+         coordinates: [
+            //[1294, 1149]
+            [2497, 679]
+         ]
+      }, {
+         name: "Lemon Thyme",
+         scientificName: "Thymus citriodorus",
+         playLine: "I know a bank wheron the wild Thyme blows... (A Midsummers Night's Dream, II .i)",
+         URL: "https://sites.google.com/view/shakespearegarden/plants/lemon-thyme",
+         coordinates: [
+            /*[1379, 987],
+            [2083, 1014]*/
+            [2413, 923],
+            [1680, 927]
+         ]
+      }, {
+         name: "Lily",
+         scientificName: "Lilium",
+         playLine: "Lilies that fester smell worse than weeds. (Sonnet XCIV)",
+         URL: "https://sites.google.com/view/shakespearegarden/plants/lily",
+         coordinates: [
+            /*[805, 568],
+            [895, 1409]*/
+            [2862, 330],
+            [2902, 1290]
+         ]
+      }, {
+         name: "Columbine",
+         scientificName: "Aquilegia",
+         playLine: "I am that flower, That columbine. (Love Labour's Lost, V .ii)",
+         URL: "https://sites.google.com/view/shakespearegarden/plants/columbine",
+         coordinates: [
+            /*[1431, 542],
+            [2052, 536],
+            [783, 793]*/
+            [2949, 1065],
+            [2366, 1313],
+            [1694, 1298]
+         ]
+      }, {
+         name: "Oriental Poppy",
+         scientificName: "Papaver orientale",
+         playLine: "Look, where he comes. Not poppy nor mandragora Nor all the drowsy syrups of the world, Shall ever medicine thee to that sweet sleep Which thou owedst yesterday. (Othello, III,iii.)",
+         URL: "https://sites.google.com/view/shakespearegarden/plants/oriental-poppy",
+         coordinates: [
+            //[1738, 663]
+            [1967, 1132]
+         ]
+      }, {
+         name: "Onion",
+         scientificName: "Allium cepa",
+         playLine: "Mine eyes smell onions; I shall weep anon: (All's Well That Ends Well, V, iii)",
+         URL: "https://sites.google.com/view/shakespearegarden/plants/onion",
+         coordinates: [
+            /*[1509, 1116],
+            [1854, 1117]*/
+            [1887, 750],
+            [2305, 723]
+         ]
+      }, {
+         name: "Wormwood",
+         scientificName: "Artemisia absinthium",
+         playLine: "Oft have I heard of you, my Lord Biron, Before I saw you; and the world's large tongue Proclaims you for a man replete with mocks, Full of comparisons and wounding flouts, Which you on all estates will execute That lie within the mercy of your wit. To weed this wormwood from your fruitful brain, And therewithal to win me, if you please, Without the which I am not to be won, You shall this twelvemonth term from day to day Visit the speechless sick and still converse With groaning wretches; and your task shall be, With all the fierce endeavor of your wit To enforce the pained impotent to smile. (Love's Labour's Lost V, ii)",
+         URL: "https://sites.google.com/view/shakespearegarden/plants/wormwood",
+         coordinates: [
+            /*[2272, 863],
+            [2773, 644]*/
+            [1010, 1251],
+            [1521, 1033]
+         ]
+      }, {
+         name: "Scotch Broom",
+         scientificName: "Cytisus scoparius",
+         playLine: "Now would I give a thousand furlongs of sea for an acre of barren ground, long heath, brown furze, any thing. The wills above be done! but I would fain die a dry death. (The Tempest, I,i.)",
+         URL: "https://sites.google.com/view/shakespearegarden/plants/scotch-broom",
+         coordinates: [
+            /*[1659, 1586],
+            [841, 1254],
+            [1084, 1525]*/
+            [2035, 223],
+            [2701, 302],
+            [2862, 550]
+         ]
+      }, {
+         name: "Primrose",
+         scientificName: "Primula vulgaris",
+         playLine: "And in the wood, where often you and I Upon faint primrose-beds were wont to lie, (MND., I,i.)",
+         URL: "https://sites.google.com/view/shakespearegarden/plants/primrose",
+         coordinates: [
+            /*[2805, 1259],
+            [2769, 826],
+            [2440, 1625]*/
+            [981, 1105],
+            [996, 550],
+            [1326, 235]
+         ]
+      }, {
+         name: "St. John's Wort",
+         scientificName: "Hypericum perforatum",
+         playLine: "Nay then, two treys, and if you grow so nice, Metheglin, wort, and malmsey: well run, dice! There's half-a-dozen sweets. (Love's Labour's Lost, V,ii)",
+         URL: "https://sites.google.com/view/shakespearegarden/plants/st-johns-wort",
+         coordinates: [
+            /*[2715, 1562]*/
+            [1006, 259]
+
+         ]
+      }, {
+         name: "Quince",
+         scientificName: "Cydonia oblonga",
+         playLine: "First, good Peter Quince, say what the play treats on, then read the names of the actors, and so grow to a point. Midsummer Night's Dream (I, ii)",
+         URL: "https://sites.google.com/view/shakespearegarden/plants/quince",
+         coordinates: [
+            /*[2286, 1173]*/
+            [1499, 777]
+         ]
+      }]
+      document.body.addEventListener('click', function (e) {
+         console.log([e.pageX, e.pageY])
+      })
+
+      var template = document.getElementById('template').cloneNode(true)
+      template.style.display = 'unset'
+      for (var i = 0; i < plantInformation.length; i++) {
+         for (var i2 = 0; i2 < plantInformation[i].coordinates.length; i2++) {
+            var thisElement = template.cloneNode(true)
+            thisElement.id = ''
+            var name1 = thisElement.getElementsByClassName('shortName')[0]
+            //name1.innerText = plantInformation[i].scientificName
+            name1.innerText = plantInformation[i].name
+            var name2 = thisElement.getElementsByClassName('popupName')[0]
+            name2.innerText = plantInformation[i].name
+            var description = thisElement.getElementsByClassName('popupContent')[0]
+            description.innerText = plantInformation[i].playLine
+            var moreInformationButton = thisElement.getElementsByClassName('dButton')[0]
+            moreInformationButton.href = plantInformation[i].URL
+            moreInformationButton.target = '_blank'
+
+            var openButton = thisElement.getElementsByClassName('openButton')[0]
+            //openButton.style.display = 'none'
+            openButton.addEventListener('click', function () {
+               var otherTags = document.getElementsByClassName('opened popup')
+               for (var i2 = 0; i2 < otherTags.length; i2++) {
+                  otherTags[i2].className = 'popup'
+               }
+               var otherShortContainers = document.getElementsByClassName('shortContainer')
+               for(var i2=0;i2<otherShortContainers.length;i2++){
+                  otherShortContainers[i2].style.display='inline-block'
+               }
+
+               var container = this.parentElement.parentElement
+               var shortContainer = container.getElementsByClassName('shortContainer')[0]
+               var popup = container.getElementsByClassName('popup')[0]
+
+               shortContainer.style.display = 'none'
+               //popup.style.display = 'inline-block'
+               popup.className = 'opened popup'
+            })
+
+            var closeButton = thisElement.getElementsByClassName('closeButton')[0]
+            closeButton.addEventListener('click', function () {
+               var container = this.parentElement.parentElement
+               var shortContainer = container.getElementsByClassName('shortContainer')[0]
+               var popup = container.getElementsByClassName('popup')[0]
+               shortContainer.style.display = 'inline-block'
+               //popup.style.display = 'none'
+               popup.className = 'popup'
+            })
+
+            thisElement.style.marginLeft = (plantInformation[i].coordinates[i2][0]) + 'px'
+            thisElement.style.marginTop = (plantInformation[i].coordinates[i2][1]) + 'px'
+            document.body.appendChild(thisElement)
+         }
+      }
+
+      $(document).ready(function () {
+         window.scrollTo(772, 697)
+         /*var city, map;
+         map = $('body');
+         city = map.find('.ct-city');
+         city.each(function () {
+            var button, that;
+            that = $(this);
+            var thePopup = that.find('.ct-popup')
+            button = that.find('.ct-plus');
+            button2 = that.find('.ct-close')
+            button1_2 = that.find('.ct-city__name')
+            button1_2.on('click',function(){button.click()})
+             button.on('click', function () {
+               var allPopups = document.getElementsByClassName('ct-city active')
+               for (var i = 0; i < allPopups.length; i++) {
+                  allPopups[i].className = 'ct-city'
+               }
+               var allNonActivePopups = document.getElementsByClassName('ct-city')
+               //console.log(allNonActivePopups)
+               for (var i = 0; i < allNonActivePopups.length; i++) {
+                  allNonActivePopups[i].style.zIndex = '10'
+                  allNonActivePopups[i].getElementsByClassName('ct-popup')[0].style.display = 'none'
+               }
+               that.addClass('active');
+               that.css('z-index', 20)
+               thePopup.css('display','block')
+            });
+             button2.on('click',function(){
+               that.removeClass('active')
+               that.css('z-index', 10)
+
+               thePopup.css('display','none')
+            })
+         });*/
+
+      });
+   </script>
+</body>
+
+</html>
